@@ -5,40 +5,45 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <title>GOVT SR Calibration Session</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap">
 <style>
 :root{
-  --bg:#f4f6f9;--surface:#fff;--ink:#18212f;--muted:#5a6578;--line:#d8dee8;
-  --accent:#2b4a8b;--accent-ink:#fff;--good:#1e7a4c;--warn:#a15c00;--bad:#b3261e;--soft:#e9eef8;
-  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  /* Dallas College brand kit: Blue leads, Red is a sparing accent, warm greys between */
+  --bg:#F7F3E8;--surface:#FFFFFF;--ink:#333333;--muted:#66645E;--line:#E5E2D6;--field:#66645E;
+  --accent:#003385;--accent-ink:#FFFFFF;--accent-hover:#001E49;--heading:#003385;--rule:#E52626;
+  --good:#1E7A4C;--warn:#8A5A00;--bad:#6D0000;--soft:#E9F2FF;
+  --body:"Open Sans",Arial,Helvetica,sans-serif;--head:Montserrat,"Open Sans",Arial,Helvetica,sans-serif;--mono:"Open Sans",Arial,Helvetica,sans-serif;
 }
-@media (prefers-color-scheme:dark){:root{--bg:#11161f;--surface:#19202c;--ink:#e6eaf1;--muted:#9aa5b8;--line:#2c3545;--accent:#8fb0f0;--accent-ink:#0f1520;--good:#5cc994;--warn:#e5a54a;--bad:#ff8a80;--soft:#202b3d;color-scheme:dark}}
+@media (prefers-color-scheme:dark){:root{--bg:#001E49;--surface:#002561;--ink:#FFFFFF;--muted:#99C3FF;--line:#2A4E85;--field:#99C3FF;--accent:#FFFFFF;--accent-ink:#003385;--accent-hover:#E9F2FF;--heading:#FFFFFF;--rule:#FF8383;--good:#5CC994;--warn:#E5A54A;--bad:#FF8383;--soft:#003385;color-scheme:dark}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--body)}
 header.top{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
 .bar{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
-.brand{font-weight:700}
+.brand{font-family:var(--head);font-weight:800;color:var(--heading)}
 .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem}
 nav{display:flex;flex-wrap:wrap;gap:4px}
-nav a{padding:6px 12px;border-radius:7px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.9rem}
+nav a{padding:6px 12px;border-radius:4px;font-family:var(--head);color:var(--muted);text-decoration:none;font-weight:600;font-size:.9rem}
 nav a[aria-current="page"]{background:var(--soft);color:var(--accent)}
 nav a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 main{max-width:1100px;margin:0 auto;padding:18px 16px 60px;display:grid;gap:16px}
-h1{font-size:1.4rem;margin:0;text-wrap:balance}
-h2{font-size:1.05rem;margin:0 0 8px}
+h1,h2,h3{font-family:var(--head);color:var(--heading);font-weight:700}
+h1{font-size:1.75rem;line-height:1.2;margin:0;text-wrap:balance}
+h1::before{content:"";display:block;width:48px;height:4px;background:var(--rule);margin-bottom:12px}
+h2{font-size:1.2rem;margin:0 0 8px}
 h3{font-size:.95rem;margin:12px 0 6px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px;min-width:0;box-shadow:0 1px 2px rgba(0,30,73,.08)}
 .muted{color:var(--muted)}
 .small{font-size:.85rem}
-.eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.eyebrow{font-family:var(--head);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .between{justify-content:space-between}
-button{font:inherit;font-weight:600;border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid var(--accent);background:transparent;color:var(--accent)}
+button{font-family:var(--head);font-size:14px;font-weight:700;border-radius:4px;padding:8px 14px;cursor:pointer;border:1px solid var(--accent);background:transparent;color:var(--accent)}
 button.primary{background:var(--accent);color:var(--accent-ink)}
+button.primary:hover:not(:disabled){background:var(--accent-hover);border-color:var(--accent-hover)}
 button.ghost{border-color:var(--line);color:var(--ink)}
 button.danger{border-color:var(--bad);color:var(--bad)}
 button:disabled{opacity:.45;cursor:not-allowed}
-input[type=text],input[type=date],select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:7px 9px;width:100%}
+input[type=text],input[type=date],select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--field);border-radius:4px;padding:7px 9px;width:100%}
 textarea{min-height:70px;resize:vertical}
 label.f{display:block;font-weight:600;font-size:.85rem;margin:8px 0 3px}
 .banner{border-radius:10px;padding:10px 14px;font-size:.9rem;border:1px solid color-mix(in srgb,var(--warn) 50%,var(--line));background:color-mix(in srgb,var(--warn) 12%,var(--surface))}
@@ -56,16 +61,16 @@ label.f{display:block;font-weight:600;font-size:.85rem;margin:8px 0 3px}
 .steps button .d{font-size:.78rem;color:var(--muted);font-weight:500}
 .steps button[aria-current="step"]{background:var(--soft);border-color:var(--accent)}
 .steps button.done .n{text-decoration:line-through;color:var(--muted)}
-.clock{font-family:var(--mono);font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.clock{font-family:var(--head);font-weight:700;color:var(--heading);font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums}
 .clock.over{color:var(--bad)}
 .script{margin:10px 0 0;padding-left:20px}
 .script li{margin-bottom:6px}
-.say{border-left:3px solid var(--accent);padding:6px 12px;background:var(--soft);border-radius:0 8px 8px 0;margin:10px 0}
+.say{border-left:4px solid var(--heading);padding:6px 12px;background:var(--soft);border-radius:0 8px 8px 0;margin:10px 0}
 /* tables */
 .tw{overflow-x:auto}
 table{border-collapse:collapse;width:100%}
 th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top;font-size:.9rem}
-th{font-size:.8rem;color:var(--muted);font-weight:600}
+th{font-size:.8rem;color:var(--heading);font-weight:700;font-family:var(--head)}
 td.num,th.num{text-align:center}
 select.sc{width:auto;min-width:64px;font-family:var(--mono)}
 .blind select.sc{color:transparent;text-shadow:0 0 0 var(--ink)}
@@ -76,7 +81,7 @@ select.sc{width:auto;min-width:64px;font-family:var(--mono)}
 .h1{background:color-mix(in srgb,var(--warn) 20%,var(--surface))}
 .h2{background:color-mix(in srgb,var(--bad) 22%,var(--surface))}
 .levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
-.crit{border:1px solid var(--line);border-radius:9px;padding:12px;margin-bottom:10px}
+.crit{border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px}
 .lvl{border:1px solid var(--line);border-radius:7px;padding:8px;font-size:.88rem;background:var(--bg)}
 .lvl b{display:block;font-size:.8rem;color:var(--muted)}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
@@ -88,7 +93,7 @@ select.sc{width:auto;min-width:64px;font-family:var(--mono)}
 <body>
 <header class="top">
   <div class="bar">
-    <div class="brand">GOVT SR Calibration Session<small id="sessMeta">Dallas College · Social Responsibility rubric</small></div>
+    <div class="brand">GOVT SR Calibration Session<small id="sessMeta" style="font-family:var(--body)">Dallas College · Social Responsibility rubric</small></div>
     <nav aria-label="Sections">
       <a href="#run">Agenda</a><a href="#rubric">Rubric</a><a href="#scores">Scores</a><a href="#results">Results</a><a href="#notes">Notes</a><a href="#setup">Setup</a><a href="#export">Export</a>
     </nav>

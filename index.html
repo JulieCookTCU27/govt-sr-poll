@@ -4,19 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GOVT SR Calibration Poll</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap">
 <style>
-:root{--bg:#f6f7f9;--card:#fff;--ink:#1b1f24;--muted:#5b6470;--line:#d9dee5;--accent:#1f4e9c;--accent-ink:#fff;--sel:#e8effa}
-@media (prefers-color-scheme:dark){:root{--bg:#121417;--card:#1b1f24;--ink:#e8eaed;--muted:#a3abb6;--line:#333a43;--accent:#7aa7f0;--accent-ink:#0d1117;--sel:#22314a}}
+/* Dallas College brand kit: Blue leads, Red is a sparing accent, warm greys between */
+:root{--bg:#F7F3E8;--card:#FFFFFF;--ink:#333333;--muted:#66645E;--line:#E5E2D6;--field:#66645E;--accent:#003385;--accent-ink:#FFFFFF;--accent-hover:#001E49;--sel:#E9F2FF;--rule:#E52626;--heading:#003385;--err:#6D0000;--head-font:Montserrat,"Open Sans",Arial,Helvetica,sans-serif;--body-font:"Open Sans",Arial,Helvetica,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#001E49;--card:#002561;--ink:#FFFFFF;--muted:#99C3FF;--line:#2A4E85;--field:#99C3FF;--accent:#FFFFFF;--accent-ink:#003385;--accent-hover:#E9F2FF;--sel:#003385;--rule:#FF8383;--heading:#FFFFFF;--err:#FF8383;color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.625 var(--body-font)}
+h1,h2{font-family:var(--head-font);color:var(--heading);font-weight:700}
+h1::before{content:"";display:block;width:48px;height:4px;background:var(--rule);margin-bottom:14px}
+.eyebrow{font-family:var(--head-font);font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
 main{max-width:760px;margin:0 auto;padding:24px 16px 64px}
-h1{font-size:1.6rem;line-height:1.25;margin:0 0 8px}
+h1{font-size:2rem;line-height:1.2;margin:0 0 10px;text-wrap:balance}
 .lead{color:var(--muted);margin:0 0 20px}
-.deadline{display:inline-block;background:var(--sel);border-radius:6px;padding:4px 10px;font-weight:600;margin-bottom:20px}
-section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:16px}
-h2{font-size:1.05rem;margin:0 0 12px}
+.deadline{display:inline-block;background:var(--sel);color:var(--heading);border-radius:4px;padding:4px 10px;font-weight:600;margin-bottom:20px}
+section{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;margin-bottom:16px}
+h2{font-size:1.25rem;margin:0 0 12px}
 label.field{display:block;font-weight:600;margin:10px 0 4px}
-input[type=text],input[type=email],select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+input[type=text],input[type=email],select,textarea{width:100%;padding:9px 10px;border:1px solid var(--field);border-radius:4px;background:var(--card);color:var(--ink);font:inherit}
 textarea{min-height:70px}
 .hint{color:var(--muted);font-size:.9rem;margin:0 0 10px}
 .day{margin-bottom:12px}
@@ -27,20 +32,22 @@ textarea{min-height:70px}
 .chip:has(input:checked){background:var(--sel);border-color:var(--accent)}
 .radios{display:flex;flex-wrap:wrap;gap:8px}
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
-button{font:inherit;font-weight:600;border-radius:8px;padding:11px 18px;cursor:pointer;border:1px solid var(--accent)}
+button{font-family:var(--head-font);font-weight:700;font-size:15px;border-radius:4px;padding:11px 18px;cursor:pointer;border:1px solid var(--accent)}
 .primary{background:var(--accent);color:var(--accent-ink)}
+.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
 .secondary{background:transparent;color:var(--accent)}
 #msg{margin-top:12px;font-weight:600}
-.err{color:#c0392b}
-@media (prefers-color-scheme:dark){.err{color:#ff8a80}}
+.err{color:var(--err)}
+
 footer{color:var(--muted);font-size:.85rem;text-align:center;margin-top:24px}
 </style>
 </head>
 <body>
 <main>
+<p class="eyebrow">Dallas College · School of Law and Public Service</p>
 <h1>GOVT Social Responsibility Rubric Calibration</h1>
 <p class="lead">Sign up and share your availability for one 90-minute Microsoft Teams session. We'll review the new Dallas College Social Responsibility rubric, score two practice examples, independently score 3–5 student artifacts, and discuss where the rubric language needs clarification. No prep or report writing required.</p>
-<div class="deadline">Please respond by Friday, November 13, 2026 at 5:00 PM CT</div>
+<div class="deadline">Please respond by Friday, Nov. 13, 2026, at 5 p.m. CT</div>
 
 <form id="poll" novalidate>
 <section>
