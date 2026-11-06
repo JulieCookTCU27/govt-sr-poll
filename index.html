@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GOVT SR Calibration Poll</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1b1f24;--muted:#5b6470;--line:#d9dee5;--accent:#1f4e9c;--accent-ink:#fff;--sel:#e8effa}
+@media (prefers-color-scheme:dark){:root{--bg:#121417;--card:#1b1f24;--ink:#e8eaed;--muted:#a3abb6;--line:#333a43;--accent:#7aa7f0;--accent-ink:#0d1117;--sel:#22314a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.6rem;line-height:1.25;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 20px}
+.deadline{display:inline-block;background:var(--sel);border-radius:6px;padding:4px 10px;font-weight:600;margin-bottom:20px}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:16px}
+h2{font-size:1.05rem;margin:0 0 12px}
+label.field{display:block;font-weight:600;margin:10px 0 4px}
+input[type=text],input[type=email],select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:70px}
+.hint{color:var(--muted);font-size:.9rem;margin:0 0 10px}
+.day{margin-bottom:12px}
+.day-name{font-weight:600;margin-bottom:6px}
+.slots{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;user-select:none}
+.chip input{margin:0}
+.chip:has(input:checked){background:var(--sel);border-color:var(--accent)}
+.radios{display:flex;flex-wrap:wrap;gap:8px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+button{font:inherit;font-weight:600;border-radius:8px;padding:11px 18px;cursor:pointer;border:1px solid var(--accent)}
+.primary{background:var(--accent);color:var(--accent-ink)}
+.secondary{background:transparent;color:var(--accent)}
+#msg{margin-top:12px;font-weight:600}
+.err{color:#c0392b}
+@media (prefers-color-scheme:dark){.err{color:#ff8a80}}
+footer{color:var(--muted);font-size:.85rem;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<main>
+<h1>GOVT Social Responsibility Rubric Calibration</h1>
+<p class="lead">Sign up and share your availability for one 90-minute Microsoft Teams session. We'll review the new Dallas College Social Responsibility rubric, score two practice examples, independently score 3–5 student artifacts, and discuss where the rubric language needs clarification. No prep or report writing required.</p>
+<div class="deadline">Please respond by Friday, November 13, 2026 at 5:00 PM CT</div>
+
+<form id="poll" novalidate>
+<section>
+<h2>About you</h2>
+<label class="field" for="name">Full name *</label>
+<input type="text" id="name" required>
+<label class="field" for="email">Dallas College email *</label>
+<input type="email" id="email" required>
+<label class="field" for="campus">Primary campus</label>
+<select id="campus">
+<option value="">Select…</option>
+<option>Brookhaven</option><option>Cedar Valley</option><option>Eastfield</option><option>El Centro</option><option>Mountain View</option><option>North Lake</option><option>Richland</option><option>Online / multiple campuses</option>
+</select>
+<label class="field">Government Curriculum Committee member?</label>
+<div class="radios">
+<label class="chip"><input type="radio" name="committee" value="Yes"> Yes</label>
+<label class="chip"><input type="radio" name="committee" value="No"> No</label>
+</div>
+</section>
+
+<section>
+<h2>Which times can you attend? *</h2>
+<p class="hint">All times Central. Select every slot that works.</p>
+<div id="slots"></div>
+</section>
+
+<section>
+<h2>Backup dates</h2>
+<p class="hint">Only if none of the times above work.</p>
+<div class="slots" id="backup"></div>
+<label class="field" for="backupTime">Best time of day on a backup date</label>
+<input type="text" id="backupTime" placeholder="e.g., mornings, after 2 PM">
+</section>
+
+<section>
+<h2>Anything else?</h2>
+<label class="field" for="notes">Comments or scheduling notes</label>
+<textarea id="notes"></textarea>
+</section>
+
+<section>
+<h2>Send your response</h2>
+<p class="hint"><strong>Send by email</strong> opens a pre-filled message to Julie Cook. Your response is only received once you press Send in your email. If nothing opens, use <strong>Copy response</strong> and paste it into an email to JCook1@DallasCollege.edu.</p>
+<div class="actions">
+<button type="submit" class="primary">Send by email</button>
+<button type="button" class="secondary" id="copy">Copy response</button>
+</div>
+<div id="msg" role="status"></div>
+</section>
+</form>
+<footer>Questions: Julie Cook, Professor of Government · JCook1@DallasCollege.edu</footer>
+</main>
+<script>
+const TO="JCook1@DallasCollege.edu";
+const days=["Mon, Nov 23","Tue, Nov 24","Mon, Nov 30","Tue, Dec 1","Wed, Dec 2","Thu, Dec 3","Fri, Dec 4"];
+const days0=["Fri, Nov 20"].concat(days);
+const times=["9:00–10:30 AM","12:00–1:30 PM","3:30–5:00 PM"];
+const backups=["Mon, Dec 7","Tue, Dec 8","Wed, Dec 9","Thu, Dec 10","Fri, Dec 11"];
+const slotsEl=document.getElementById("slots");
+days0.forEach(d=>{
+  const wrap=document.createElement("div");wrap.className="day";
+  const n=document.createElement("div");n.className="day-name";n.textContent=d;wrap.appendChild(n);
+  const row=document.createElement("div");row.className="slots";
+  times.forEach(t=>{const l=document.createElement("label");l.className="chip";const i=document.createElement("input");i.type="checkbox";i.name="slot";i.value=d+", "+t;l.append(i," "+t);row.appendChild(l);});
+  wrap.appendChild(row);slotsEl.appendChild(wrap);
+});
+const none=document.createElement("label");none.className="chip";const ni=document.createElement("input");ni.type="checkbox";ni.name="slot";ni.value="None of these times work";none.append(ni," None of these work");slotsEl.appendChild(none);
+const bEl=document.getElementById("backup");
+backups.concat(["Can't attend in this window"]).forEach(d=>{const l=document.createElement("label");l.className="chip";const i=document.createElement("input");i.type="checkbox";i.name="backup";i.value=d;l.append(i," "+d);bEl.appendChild(l);});
+
+function val(id){return document.getElementById(id).value.trim();}
+function checked(name){return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(i=>i.value);}
+function build(){
+  const name=val("name"),email=val("email"),slots=checked("slot");
+  const msg=document.getElementById("msg");msg.className="";
+  if(!name||!email||!slots.length){msg.className="err";msg.textContent="Please enter your name, email, and at least one time option.";return null;}
+  const c=document.querySelector('input[name="committee"]:checked');
+  const lines=["GOVT SR CALIBRATION POLL RESPONSE","","Name: "+name,"Email: "+email,"Campus: "+(val("campus")||"—"),"Curriculum Committee: "+(c?c.value:"—"),"","Available slots:"].concat(slots.map(s=>"  - "+s));
+  const b=checked("backup");
+  if(b.length){lines.push("","Backup dates:");b.forEach(s=>lines.push("  - "+s));}
+  if(val("backupTime"))lines.push("Backup time of day: "+val("backupTime"));
+  if(val("notes"))lines.push("","Notes: "+val("notes"));
+  return {name,text:lines.join("\n")};
+}
+document.getElementById("poll").addEventListener("submit",e=>{
+  e.preventDefault();const r=build();if(!r)return;
+  location.href="mailto:"+TO+"?subject="+encodeURIComponent("SR Calibration Availability – "+r.name)+"&body="+encodeURIComponent(r.text);
+  const m=document.getElementById("msg");m.textContent="Your email app should open now. Press Send there to submit.";
+});
+document.getElementById("copy").addEventListener("click",async()=>{
+  const r=build();if(!r)return;const m=document.getElementById("msg");
+  try{await navigator.clipboard.writeText(r.text);m.textContent="Copied. Paste it into an email to "+TO+".";}
+  catch(err){m.className="err";m.textContent="Copy didn't work in this browser. Please email your times to "+TO+".";}
+});
+</script>
+</body>
+</html>
