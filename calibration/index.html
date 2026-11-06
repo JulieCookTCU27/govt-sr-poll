@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>GOVT SR Calibration Session</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#f4f6f9;--surface:#fff;--ink:#18212f;--muted:#5a6578;--line:#d8dee8;
+  --accent:#2b4a8b;--accent-ink:#fff;--good:#1e7a4c;--warn:#a15c00;--bad:#b3261e;--soft:#e9eef8;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#11161f;--surface:#19202c;--ink:#e6eaf1;--muted:#9aa5b8;--line:#2c3545;--accent:#8fb0f0;--accent-ink:#0f1520;--good:#5cc994;--warn:#e5a54a;--bad:#ff8a80;--soft:#202b3d;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--body)}
+header.top{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.brand{font-weight:700}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem}
+nav{display:flex;flex-wrap:wrap;gap:4px}
+nav a{padding:6px 12px;border-radius:7px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.9rem}
+nav a[aria-current="page"]{background:var(--soft);color:var(--accent)}
+nav a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{max-width:1100px;margin:0 auto;padding:18px 16px 60px;display:grid;gap:16px}
+h1{font-size:1.4rem;margin:0;text-wrap:balance}
+h2{font-size:1.05rem;margin:0 0 8px}
+h3{font-size:.95rem;margin:12px 0 6px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+.eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.between{justify-content:space-between}
+button{font:inherit;font-weight:600;border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid var(--accent);background:transparent;color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-ink)}
+button.ghost{border-color:var(--line);color:var(--ink)}
+button.danger{border-color:var(--bad);color:var(--bad)}
+button:disabled{opacity:.45;cursor:not-allowed}
+input[type=text],input[type=date],select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:7px 9px;width:100%}
+textarea{min-height:70px;resize:vertical}
+label.f{display:block;font-weight:600;font-size:.85rem;margin:8px 0 3px}
+.banner{border-radius:10px;padding:10px 14px;font-size:.9rem;border:1px solid color-mix(in srgb,var(--warn) 50%,var(--line));background:color-mix(in srgb,var(--warn) 12%,var(--surface))}
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:600;border:1px solid var(--line)}
+.pill.good{color:var(--good);border-color:color-mix(in srgb,var(--good) 50%,var(--line))}
+.pill.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 50%,var(--line))}
+.pill.bad{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 50%,var(--line))}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+/* agenda */
+.run{display:grid;grid-template-columns:260px 1fr;gap:16px}
+@media (max-width:760px){.run{grid-template-columns:1fr}}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.steps button{width:100%;text-align:left;border:1px solid transparent;color:var(--ink);background:transparent;display:grid;grid-template-columns:auto 1fr;gap:2px 10px;padding:8px 10px}
+.steps button .t{font-family:var(--mono);font-size:.78rem;color:var(--muted);grid-row:span 2;padding-top:2px}
+.steps button .d{font-size:.78rem;color:var(--muted);font-weight:500}
+.steps button[aria-current="step"]{background:var(--soft);border-color:var(--accent)}
+.steps button.done .n{text-decoration:line-through;color:var(--muted)}
+.clock{font-family:var(--mono);font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.clock.over{color:var(--bad)}
+.script{margin:10px 0 0;padding-left:20px}
+.script li{margin-bottom:6px}
+.say{border-left:3px solid var(--accent);padding:6px 12px;background:var(--soft);border-radius:0 8px 8px 0;margin:10px 0}
+/* tables */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top;font-size:.9rem}
+th{font-size:.8rem;color:var(--muted);font-weight:600}
+td.num,th.num{text-align:center}
+select.sc{width:auto;min-width:64px;font-family:var(--mono)}
+.blind select.sc{color:transparent;text-shadow:0 0 0 var(--ink)}
+.blind select.sc option{color:var(--ink)}
+.masked{letter-spacing:2px;color:var(--muted)}
+.heat{display:inline-block;min-width:38px;text-align:center;border-radius:6px;padding:3px 6px;font-family:var(--mono);font-weight:600}
+.h0{background:color-mix(in srgb,var(--good) 18%,var(--surface))}
+.h1{background:color-mix(in srgb,var(--warn) 20%,var(--surface))}
+.h2{background:color-mix(in srgb,var(--bad) 22%,var(--surface))}
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.crit{border:1px solid var(--line);border-radius:9px;padding:12px;margin-bottom:10px}
+.lvl{border:1px solid var(--line);border-radius:7px;padding:8px;font-size:.88rem;background:var(--bg)}
+.lvl b{display:block;font-size:.8rem;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-weight:600;font-size:.9rem}
+[hidden]{display:none!important}
+@media print{header.top,nav,button{display:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="bar">
+    <div class="brand">GOVT SR Calibration Session<small id="sessMeta">Dallas College · Social Responsibility rubric</small></div>
+    <nav aria-label="Sections">
+      <a href="#run">Agenda</a><a href="#rubric">Rubric</a><a href="#scores">Scores</a><a href="#results">Results</a><a href="#notes">Notes</a><a href="#setup">Setup</a><a href="#export">Export</a>
+    </nav>
+  </div>
+</header>
+<main id="app"></main>
+<div id="toast" role="status" hidden></div>
+
+<script>
+/* ---------- data ---------- */
+const KEY="govt-sr-calibration-v1";
+const LEVELS=[["4","Capstone"],["3","Milestone"],["2","Milestone"],["1","Benchmark"],["0","Below Benchmark"]];
+const SCORE_OPTS=["","4","3","2","1","0","NA"];
+const uid=()=>Math.random().toString(36).slice(2,9);
+function blankLevels(){return {"4":"","3":"","2":"","1":"","0":""};}
+function seed(){
+  const crit=[
+    "SLO 1 · Analysis of Cultural Frameworks","SLO 2 · Intercultural Communication and Collaboration","SLO 3 · Evaluation of Civic Issues Across Perspectives","SLO 4 · Proposal of an Ethical Response","SLO 5 · Application of Learning to Community Issues"
+  ].map(n=>({id:uid(),name:n,levels:blankLevels()}));
+  const raters=["Julie Cook","Rater 2","Rater 3","Rater 4"].map(n=>({id:uid(),name:n}));
+  const arts=[["P1","practice"],["P2","practice"],["A1","scoring"],["A2","scoring"],["A3","scoring"],["A4","scoring"],["A5","scoring"]].map(([l,k])=>({id:uid(),label:l,kind:k,note:""}));
+  return {v:1,session:{date:"",confirmed:false},raters,criteria:crit,artifacts:arts,scores:{},revealed:{},notes:{},general:{decisions:"",followups:""},step:0,timer:{base:0,startedAt:null},done:{},blind:true,curArt:null};
+}
+let S;
+try{S=JSON.parse(localStorage.getItem(KEY))||seed();}catch(e){S=seed();}
+let saveT;
+function save(){clearTimeout(saveT);saveT=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast("Couldn't save in this browser. Export a backup.");}},150);}
+function toast(t){const el=document.getElementById("toast");el.textContent=t;el.hidden=false;clearTimeout(el._t);el._t=setTimeout(()=>el.hidden=true,2200);}
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- agenda ---------- */
+const STEPS=[
+ {name:"Welcome and purpose",min:5,
+  say:"Thank you for being here. Today we're testing the rubric, not each other. We want to see how clearly and consistently it can be applied, and where the wording needs work. We are not looking for perfect agreement.",
+  pts:["Confirm everyone can see the shared screen and has the rater packet and artifacts open.","Walk the plan: read the rubric, two practice examples together, independent scoring, then compare.","Explain how to send scores: a private Teams chat to you, criterion order, e.g. \"A1: 3, 2, 3, 2, NA\".","Remind raters to score only what the artifact shows, and to use NA when the assignment didn't allow that criterion."],
+  tool:"run"},
+ {name:"Read the rubric together",min:15,
+  say:"Let's read each criterion top to bottom. For each one, I'll ask what evidence you'd look for, and what separates a 3 from a 2.",
+  pts:["Open the Rubric tab and go criterion by criterion.","Ask: What does this look like in a GOVT assignment?","Ask: Which words could two people read differently?","Type any unclear wording into Notes as you go."],
+  tool:"rubric"},
+ {name:"Practice example 1",min:10,
+  say:"Take about four minutes to score P1 on your own, then send me your scores privately. Don't discuss yet.",
+  pts:["Scores tab → P1. Blind mode stays on while you enter.","When all scores are in, press Reveal.","Start with the criterion that has the widest spread. Ask each rater to point to the evidence they used.","Agree on what a typical score looks like for this example."],
+  tool:"scores",art:"P1"},
+ {name:"Practice example 2",min:10,
+  say:"Same process for P2. Use what we just agreed on.",
+  pts:["Scores tab → P2, enter scores, then Reveal.","Check whether the gaps from P1 narrowed.","Note any descriptor language that still caused disagreement."],
+  tool:"scores",art:"P2"},
+ {name:"Independent scoring",min:25,
+  say:"Now score the remaining artifacts on your own, with no discussion. About five minutes each. Send me all your scores when you finish.",
+  pts:["Keep the screen on the Agenda or turn off screen sharing so raters don't see entries.","Enter each rater's scores in the Scores tab with Blind mode on.","Original scores are what Amy needs. Don't change them after discussion."],
+  tool:"scores"},
+ {name:"Compare and discuss",min:20,
+  say:"Let's look at where we agreed and where we didn't. The goal is to find out whether gaps come from the rubric language or from the artifact.",
+  pts:["Results tab. Reveal artifacts one at a time.","Start with red cells (scores 2 or more points apart).","Ask: Which words in the descriptor led you to that score?","Ask: Is the gap from the rubric, the assignment, or the artifact?","Capture suggested wording in Notes."],
+  tool:"results"},
+ {name:"Recommendations and wrap-up",min:5,
+  say:"Here are the rubric changes we flagged today. Does this capture it? I'll send our worksheets to Amy through Brightspace.",
+  pts:["Read back the flagged language from Notes.","Confirm the top recommendations.","Thank everyone. Export the session right after the call."],
+  tool:"notes"}
+];
+function stepStart(i){return STEPS.slice(0,i).reduce((a,s)=>a+s.min,0);}
+function fmt(m){const h=Math.floor(m/60),mm=m%60;return h+":"+String(mm).padStart(2,"0");}
+function timerMs(){return S.timer.base+(S.timer.startedAt?Date.now()-S.timer.startedAt:0);}
+function clockText(ms){const neg=ms<0;ms=Math.abs(ms);const s=Math.floor(ms/1000);return (neg?"+":"")+Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+
+/* ---------- helpers ---------- */
+const art=id=>S.artifacts.find(a=>a.id===id);
+function getScore(a,r,c){return S.scores[a]?.[r]?.[c]||"";}
+function setScore(a,r,c,v){S.scores[a]=S.scores[a]||{};S.scores[a][r]=S.scores[a][r]||{};S.scores[a][r][c]=v;save();}
+function stats(a,c){
+  const vals=S.raters.map(r=>getScore(a,r.id,c)).filter(v=>v!==""&&v!=="NA").map(Number);
+  const na=S.raters.filter(r=>getScore(a,r.id,c)==="NA").length;
+  if(!vals.length)return {n:0,na,vals};
+  let pairs=0,exact=0,adj=0;
+  for(let i=0;i<vals.length;i++)for(let j=i+1;j<vals.length;j++){pairs++;const d=Math.abs(vals[i]-vals[j]);if(!d)exact++;if(d<=1)adj++;}
+  const range=Math.max(...vals)-Math.min(...vals);
+  const freq={};vals.forEach(v=>freq[v]=(freq[v]||0)+1);
+  const mode=Object.entries(freq).sort((x,y)=>y[1]-x[1]||y[0]-x[0])[0][0];
+  return {n:vals.length,na,vals,range,mode,exact:pairs?exact/pairs:1,adj:pairs?adj/pairs:1};
+}
+const pct=x=>Math.round(x*100)+"%";
+function entered(a){return S.raters.filter(r=>S.criteria.every(c=>getScore(a,r.id,c.id)!=="")).length;}
+
+/* ---------- views ---------- */
+const V={};
+V.run=()=>{
+  const st=STEPS[S.step],start=stepStart(S.step),remain=st.min*60000-timerMs();
+  return `<section class="panel"><div class="row between"><div><div class="eyebrow">Calibration meeting · 90 minutes</div><h1>Agenda</h1></div>
+  <div class="row"><span class="pill ${S.session.confirmed?"good":"warn"}">${S.session.confirmed?"Rubric confirmed":"Rubric not confirmed yet"}</span></div></div></section>
+  <div class="run">
+   <section class="panel"><ol class="steps">${STEPS.map((s,i)=>`<li><button data-step="${i}" ${i===S.step?'aria-current="step"':""} class="${S.done[i]?"done":""}"><span class="t">${fmt(stepStart(i))}</span><span class="n">${esc(s.name)}</span><span class="d">${s.min} min</span></button></li>`).join("")}</ol></section>
+   <section class="panel">
+     <div class="row between"><div><div class="eyebrow">Step ${S.step+1} of ${STEPS.length} · ${fmt(start)}–${fmt(start+st.min)}</div><h2 style="font-size:1.25rem">${esc(st.name)}</h2></div>
+     <div style="text-align:right"><div class="clock ${remain<0?"over":""}" id="clock">${clockText(remain)}</div><div class="small muted">${remain<0?"over time":"left in this step"}</div></div></div>
+     <div class="row" style="margin-top:8px"><button class="primary" id="tStart">${S.timer.startedAt?"Pause":"Start"} timer</button><button class="ghost" id="tReset">Reset</button>
+       <span style="flex:1"></span><button class="ghost" id="prev" ${S.step===0?"disabled":""}>Back</button><button class="primary" id="next">${S.step===STEPS.length-1?"Finish":"Done, next step"}</button></div>
+     <div class="say"><div class="eyebrow">You can say</div>${esc(st.say)}</div>
+     <ul class="script">${st.pts.map(p=>`<li>${esc(p)}</li>`).join("")}</ul>
+     <div class="row"><a href="#${st.tool}" class="small" data-go-art="${st.art||""}">Open the ${st.tool==="run"?"agenda":st.tool} tab →</a></div>
+   </section>
+  </div>`;
+};
+V.rubric=()=>`<section class="panel"><div class="row between"><div><div class="eyebrow">Read together</div><h1>Rubric</h1></div><a href="#setup" class="small">Edit rubric →</a></div>
+  ${S.session.confirmed?"":`<p class="banner" style="margin:10px 0 0">These criteria are placeholders from the five approved SLOs. Replace them in Setup with the calibration draft (expected Nov 17–19), then check "Rubric confirmed".</p>`}</section>
+  ${S.criteria.map((c,i)=>`<section class="panel crit"><h2>${i+1}. ${esc(c.name)}</h2><div class="levels">${LEVELS.map(([k,n])=>`<div class="lvl"><b>${k} · ${n}</b>${esc(c.levels[k])||'<span class="muted">Add descriptor in Setup</span>'}</div>`).join("")}</div>
+  <label class="f" for="un-${c.id}">Unclear wording we noticed</label><textarea id="un-${c.id}" data-note="${c.id}" data-field="unclear">${esc(S.notes[c.id]?.unclear)}</textarea></section>`).join("")}`;
+V.scores=()=>{
+  if(!S.curArt||!art(S.curArt))S.curArt=S.artifacts[0]?.id;
+  const a=art(S.curArt);if(!a)return `<section class="panel">Add artifacts in Setup first.</section>`;
+  const blind=S.blind&&!S.revealed[a.id];
+  return `<section class="panel"><div class="row between"><div><div class="eyebrow">Enter each rater's original scores</div><h1>Scores</h1></div>
+   <label class="row small"><input type="checkbox" id="blind" ${S.blind?"checked":""}> Blind mode (hide numbers until Reveal)</label></div>
+   <div class="row" style="margin-top:10px">${S.artifacts.map(x=>`<button class="${x.id===a.id?"primary":"ghost"}" data-art="${x.id}">${esc(x.label)}<span class="small" style="font-weight:500;opacity:.8"> ${x.kind==="practice"?"practice":""} ${entered(x.id)}/${S.raters.length}</span></button>`).join("")}</div></section>
+   <section class="panel ${blind?"blind":""}"><div class="row between"><h2>${esc(a.label)} <span class="pill">${a.kind==="practice"?"Practice":"Scoring"}</span></h2>
+   <div class="row"><span class="small muted">${entered(a.id)} of ${S.raters.length} raters complete</span>
+   <button class="${S.revealed[a.id]?"ghost":"primary"}" id="reveal">${S.revealed[a.id]?"Hide scores":"Reveal scores"}</button></div></div>
+   ${a.note?`<p class="small muted">${esc(a.note)}</p>`:""}
+   <div class="tw"><table><thead><tr><th>Rater</th>${S.criteria.map((c,i)=>`<th class="num" title="${esc(c.name)}">C${i+1}</th>`).join("")}<th>Quick entry</th></tr></thead><tbody>
+   ${S.raters.map(r=>`<tr><td>${esc(r.name)}</td>${S.criteria.map(c=>{const v=getScore(a.id,r.id,c.id);return `<td class="num"><select class="sc" aria-label="${esc(r.name)}, ${esc(c.name)}" data-r="${r.id}" data-c="${c.id}">${SCORE_OPTS.map(o=>`<option value="${o}" ${o===v?"selected":""}>${o===""?"–":blind&&o!==""?"•":o}</option>`).join("")}</select></td>`;}).join("")}
+   <td><input type="text" class="qe mono" data-r="${r.id}" placeholder="e.g. 3,2,3,2,NA" aria-label="Quick entry for ${esc(r.name)}" style="min-width:140px"></td></tr>`).join("")}
+   </tbody></table></div>
+   <p class="small muted">Quick entry: type scores in criterion order (commas or spaces; NA allowed) and press Enter. C1–C${S.criteria.length} follow the rubric order.</p></section>
+   ${S.revealed[a.id]?resultTable(a):""}`;
+};
+function cellFor(st){if(!st.n)return `<span class="muted">–</span>`;const cls=st.range>=2?"h2":st.range===1?"h1":"h0";return `<span class="heat ${cls}">${st.vals.join(" ")}</span>`;}
+function resultTable(a){
+  return `<section class="panel"><h2>${esc(a.label)} results</h2><div class="tw"><table><thead><tr><th>Criterion</th><th>Scores</th><th class="num">Range</th><th class="num">Most common</th><th class="num">Exact agree</th><th class="num">Within 1</th><th class="num">NA</th></tr></thead><tbody>
+  ${S.criteria.map((c,i)=>{const st=stats(a.id,c.id);return `<tr><td>${i+1}. ${esc(c.name)}</td><td>${cellFor(st)}</td><td class="num mono">${st.n?st.range:"–"}</td><td class="num mono">${st.n?st.mode:"–"}</td><td class="num mono">${st.n>1?pct(st.exact):"–"}</td><td class="num mono">${st.n>1?pct(st.adj):"–"}</td><td class="num mono">${st.na||""}</td></tr>`;}).join("")}
+  </tbody></table></div><p class="small muted">Green: all the same. Amber: 1 point apart. Red: 2+ points apart, discuss first. Agreement is the share of rater pairs.</p></section>`;
+}
+V.results=()=>{
+  const sc=S.artifacts.filter(a=>a.kind==="scoring");
+  const summary=S.criteria.map((c,i)=>{let pairs=0,ex=0,ad=0,wide=0;sc.forEach(a=>{const st=stats(a.id,c.id);if(st.n>1){const p=st.n*(st.n-1)/2;pairs+=p;ex+=st.exact*p;ad+=st.adj*p;}if(st.range>=2)wide++;});return {c,i,pairs,ex:pairs?ex/pairs:null,ad:pairs?ad/pairs:null,wide};});
+  return `<section class="panel"><div class="eyebrow">Scoring artifacts only</div><h1>Results</h1>
+  <div class="tw" style="margin-top:10px"><table><thead><tr><th>Criterion</th>${sc.map(a=>`<th class="num">${esc(a.label)}${S.revealed[a.id]?"":" <span class='small'>(hidden)</span>"}</th>`).join("")}<th class="num">Exact agree</th><th class="num">Within 1</th><th class="num">Wide gaps</th></tr></thead><tbody>
+  ${summary.map(s=>`<tr><td>${s.i+1}. ${esc(s.c.name)}</td>${sc.map(a=>`<td class="num">${S.revealed[a.id]?cellFor(stats(a.id,s.c.id)):'<span class="masked">•••</span>'}</td>`).join("")}<td class="num mono">${s.ex==null?"–":pct(s.ex)}</td><td class="num mono">${s.ad==null?"–":pct(s.ad)}</td><td class="num">${s.wide?`<span class="pill bad">${s.wide}</span>`:'<span class="pill good">0</span>'}</td></tr>`).join("")}
+  </tbody></table></div>
+  <div class="row" style="margin-top:10px">${sc.map(a=>`<button class="ghost" data-rev="${a.id}">${S.revealed[a.id]?"Hide":"Reveal"} ${esc(a.label)}</button>`).join("")}<button class="primary" id="revAll">Reveal all</button></div>
+  <p class="small muted">Wide gaps counts the artifacts where scores on that criterion were 2 or more points apart. Agreement figures always use all entered scores; reveal only controls what's on screen. Amy runs the official agreement analysis.</p></section>`;
+};
+V.notes=()=>`<section class="panel"><div class="eyebrow">Capture as you go</div><h1>Notes</h1></section>
+  ${S.criteria.map((c,i)=>`<section class="panel"><h2>${i+1}. ${esc(c.name)}</h2><div class="grid2">
+   <div><label class="f" for="n1-${c.id}">Discussion notes</label><textarea id="n1-${c.id}" data-note="${c.id}" data-field="discussion">${esc(S.notes[c.id]?.discussion)}</textarea></div>
+   <div><label class="f" for="n2-${c.id}">Unclear wording</label><textarea id="n2-${c.id}" data-note="${c.id}" data-field="unclear">${esc(S.notes[c.id]?.unclear)}</textarea></div>
+   <div><label class="f" for="n3-${c.id}">Suggested revision</label><textarea id="n3-${c.id}" data-note="${c.id}" data-field="revision">${esc(S.notes[c.id]?.revision)}</textarea></div></div></section>`).join("")}
+  <section class="panel grid2"><div><label class="f" for="g1">Group decisions</label><textarea id="g1" data-gen="decisions">${esc(S.general.decisions)}</textarea></div>
+  <div><label class="f" for="g2">Follow-ups for Amy / the workgroup</label><textarea id="g2" data-gen="followups">${esc(S.general.followups)}</textarea></div></section>`;
+V.setup=()=>`<section class="panel"><div class="eyebrow">Before the meeting</div><h1>Setup</h1>
+  <p class="small muted">Everything saves automatically in this browser. Use Export for a backup file.</p>
+  <div class="grid2"><div><label class="f" for="sdate">Meeting date</label><input type="date" id="sdate" value="${esc(S.session.date)}"></div>
+  <div><label class="f">&nbsp;</label><label class="row"><input type="checkbox" id="conf" ${S.session.confirmed?"checked":""}> Rubric confirmed (calibration draft entered)</label></div></div></section>
+  <section class="panel"><h2>Raters</h2><p class="small muted">Include yourself. Amy asked for 3–5.</p>
+  ${S.raters.map(r=>`<div class="row" style="margin-bottom:6px"><input type="text" value="${esc(r.name)}" data-rname="${r.id}" aria-label="Rater name" style="flex:1;min-width:180px"><button class="danger" data-rdel="${r.id}" aria-label="Remove ${esc(r.name)}">Remove</button></div>`).join("")}
+  <button id="radd">Add rater</button></section>
+  <section class="panel"><h2>Artifacts</h2><p class="small muted">Use codes only (P1, A1…). Never enter student names or IDs; this page is public.</p>
+  <div class="tw"><table><thead><tr><th>Code</th><th>Type</th><th>Note (assignment, length)</th><th></th></tr></thead><tbody>
+  ${S.artifacts.map(a=>`<tr><td><input type="text" value="${esc(a.label)}" data-alabel="${a.id}" aria-label="Artifact code" style="width:80px"></td><td><select data-akind="${a.id}" aria-label="Artifact type"><option value="practice" ${a.kind==="practice"?"selected":""}>Practice</option><option value="scoring" ${a.kind==="scoring"?"selected":""}>Scoring</option></select></td><td><input type="text" value="${esc(a.note)}" data-anote="${a.id}" aria-label="Artifact note"></td><td><button class="danger" data-adel="${a.id}">Remove</button></td></tr>`).join("")}
+  </tbody></table></div><button id="aadd" style="margin-top:8px">Add artifact</button></section>
+  <section class="panel"><h2>Rubric criteria</h2><p class="small muted">Paste each criterion's descriptors from the calibration draft. Scale follows the Dallas College format (4 Capstone to 0 Below Benchmark); raters can also mark NA when the assignment didn't allow that criterion.</p>
+  ${S.criteria.map((c,i)=>`<div class="crit"><div class="row"><span class="mono">C${i+1}</span><input type="text" value="${esc(c.name)}" data-cname="${c.id}" aria-label="Criterion name" style="flex:1;min-width:200px"><button class="ghost" data-cup="${c.id}" ${i===0?"disabled":""} aria-label="Move up">↑</button><button class="danger" data-cdel="${c.id}">Remove</button></div>
+   <div class="levels" style="margin-top:8px">${LEVELS.map(([k,n])=>`<div><label class="f" for="lv-${c.id}-${k}">${k} · ${n}</label><textarea id="lv-${c.id}-${k}" data-lvl="${c.id}" data-k="${k}">${esc(c.levels[k])}</textarea></div>`).join("")}</div></div>`).join("")}
+  <button id="cadd">Add criterion</button></section>
+  <section class="panel"><h2>Start over</h2><p class="small muted">Clears all scores and notes in this browser. Export first if you need them.</p><div class="row"><button class="danger" id="resetAsk">Reset session</button><span id="resetConfirm" hidden><button class="danger" id="resetYes">Yes, erase everything</button> <button class="ghost" id="resetNo">Cancel</button></span></div></section>`;
+V.export=()=>`<section class="panel"><div class="eyebrow">After the meeting</div><h1>Export</h1>
+  <p>Scores live only in this browser. Download a backup right after the call, and use the CSV and summary for Amy's worksheets.</p>
+  <div class="row"><button class="primary" id="xcsv">Download scores (CSV)</button><button id="xmd">Download notes and results (text)</button><button id="xjson">Download backup (JSON)</button></div>
+  <h3>Restore from a backup</h3><input type="file" id="xload" accept="application/json,.json" aria-label="Backup file"></section>
+  <section class="panel"><h2>Summary preview</h2><textarea id="xprev" readonly style="min-height:260px" class="mono">${esc(summaryText())}</textarea><div class="row" style="margin-top:8px"><button id="xcopy">Copy summary</button></div></section>`;
+
+/* ---------- export builders ---------- */
+function csv(){
+  const head=["Artifact","Type","Rater"].concat(S.criteria.map((c,i)=>"C"+(i+1)+" "+c.name));
+  const rows=[head];S.artifacts.forEach(a=>S.raters.forEach(r=>rows.push([a.label,a.kind,r.name].concat(S.criteria.map(c=>getScore(a.id,r.id,c.id))))));
+  return rows.map(r=>r.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+}
+function summaryText(){
+  const L=[`GOVT Social Responsibility Rubric Calibration`,`Date: ${S.session.date||"—"}`,`Raters (${S.raters.length}): ${S.raters.map(r=>r.name).join(", ")}`,`Artifacts: ${S.artifacts.map(a=>a.label+" ("+a.kind+")").join(", ")}`,""];
+  L.push("RESULTS BY CRITERION (scoring artifacts)");
+  S.criteria.forEach((c,i)=>{
+    L.push(`C${i+1} ${c.name}`);
+    S.artifacts.filter(a=>a.kind==="scoring").forEach(a=>{const st=stats(a.id,c.id);if(st.n)L.push(`  ${a.label}: ${st.vals.join(", ")} | range ${st.range} | exact ${st.n>1?pct(st.exact):"–"} | within 1 ${st.n>1?pct(st.adj):"–"}${st.na?" | NA "+st.na:""}`);});
+    const n=S.notes[c.id]||{};
+    if(n.discussion)L.push("  Discussion: "+n.discussion.replace(/\n/g," "));
+    if(n.unclear)L.push("  Unclear wording: "+n.unclear.replace(/\n/g," "));
+    if(n.revision)L.push("  Suggested revision: "+n.revision.replace(/\n/g," "));
+    L.push("");
+  });
+  if(S.general.decisions)L.push("GROUP DECISIONS",S.general.decisions,"");
+  if(S.general.followups)L.push("FOLLOW-UPS",S.general.followups,"");
+  return L.join("\n");
+}
+function dl(name,text,type){const b=new Blob([text],{type});const u=URL.createObjectURL(b);const a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);}
+const stamp=()=>(S.session.date||new Date().toISOString().slice(0,10));
+
+/* ---------- render + events ---------- */
+const app=document.getElementById("app");
+function view(){const h=(location.hash||"#run").slice(1);return V[h]?h:"run";}
+function render(){
+  const v=view();app.innerHTML=V[v]();
+  document.querySelectorAll("nav a").forEach(a=>a.getAttribute("href")==="#"+v?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
+  document.getElementById("sessMeta").textContent=(S.session.date?new Date(S.session.date+"T12:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})+" · ":"")+`${S.raters.length} raters · ${S.artifacts.length} artifacts`;
+}
+window.addEventListener("hashchange",render);
+setInterval(()=>{if(view()==="run"&&S.timer.startedAt){const el=document.getElementById("clock");if(el){const r=STEPS[S.step].min*60000-timerMs();el.textContent=clockText(r);el.classList.toggle("over",r<0);}}},500);
+
+app.addEventListener("click",e=>{
+  const t=e.target.closest("button,a");if(!t)return;
+  const d=t.dataset;
+  if(d.step!==undefined){S.step=+d.step;S.timer={base:0,startedAt:null};save();render();}
+  else if(t.id==="tStart"){if(S.timer.startedAt){S.timer.base=timerMs();S.timer.startedAt=null;}else S.timer.startedAt=Date.now();save();render();}
+  else if(t.id==="tReset"){S.timer={base:0,startedAt:null};save();render();}
+  else if(t.id==="next"){S.done[S.step]=true;if(S.step<STEPS.length-1){S.step++;S.timer={base:0,startedAt:Date.now()};}else{S.timer.startedAt=null;toast("Meeting complete. Export your session.");}save();render();}
+  else if(t.id==="prev"){S.step=Math.max(0,S.step-1);S.timer={base:0,startedAt:null};save();render();}
+  else if(d.goArt){const a=S.artifacts.find(x=>x.label===d.goArt);if(a){S.curArt=a.id;save();}}
+  else if(d.art){S.curArt=d.art;save();render();}
+  else if(t.id==="reveal"){S.revealed[S.curArt]=!S.revealed[S.curArt];save();render();}
+  else if(d.rev){S.revealed[d.rev]=!S.revealed[d.rev];save();render();}
+  else if(t.id==="revAll"){S.artifacts.forEach(a=>S.revealed[a.id]=true);save();render();}
+  else if(t.id==="radd"){S.raters.push({id:uid(),name:"Rater "+(S.raters.length+1)});save();render();}
+  else if(d.rdel){S.raters=S.raters.filter(r=>r.id!==d.rdel);save();render();}
+  else if(t.id==="aadd"){S.artifacts.push({id:uid(),label:"A"+(S.artifacts.filter(a=>a.kind==="scoring").length+1),kind:"scoring",note:""});save();render();}
+  else if(d.adel){S.artifacts=S.artifacts.filter(a=>a.id!==d.adel);save();render();}
+  else if(t.id==="cadd"){S.criteria.push({id:uid(),name:"New criterion",levels:blankLevels()});save();render();}
+  else if(d.cdel){S.criteria=S.criteria.filter(c=>c.id!==d.cdel);save();render();}
+  else if(d.cup){const i=S.criteria.findIndex(c=>c.id===d.cup);if(i>0){[S.criteria[i-1],S.criteria[i]]=[S.criteria[i],S.criteria[i-1]];save();render();}}
+  else if(t.id==="resetAsk"){document.getElementById("resetConfirm").hidden=false;}
+  else if(t.id==="resetNo"){document.getElementById("resetConfirm").hidden=true;}
+  else if(t.id==="resetYes"){S=seed();save();toast("Session reset");location.hash="#setup";render();}
+  else if(t.id==="xcsv")dl(`GOVT_SR_calibration_scores_${stamp()}.csv`,csv(),"text/csv");
+  else if(t.id==="xmd")dl(`GOVT_SR_calibration_summary_${stamp()}.txt`,summaryText(),"text/plain");
+  else if(t.id==="xjson")dl(`GOVT_SR_calibration_backup_${stamp()}.json`,JSON.stringify(S,null,2),"application/json");
+  else if(t.id==="xcopy"){const ta=document.getElementById("xprev");navigator.clipboard.writeText(ta.value).then(()=>toast("Summary copied"),()=>{ta.select();toast("Selected. Press Ctrl+C.");});}
+});
+app.addEventListener("change",e=>{
+  const t=e.target,d=t.dataset;
+  if(t.classList.contains("sc")){setScore(S.curArt,d.r,d.c,t.value);render();}
+  else if(t.id==="blind"){S.blind=t.checked;save();render();}
+  else if(t.id==="sdate"){S.session.date=t.value;save();render();}
+  else if(t.id==="conf"){S.session.confirmed=t.checked;save();}
+  else if(d.akind){art(d.akind).kind=t.value;save();}
+  else if(t.id==="xload"&&t.files[0]){const fr=new FileReader();fr.onload=()=>{try{const o=JSON.parse(fr.result);if(!o.criteria||!o.raters)throw 0;S=o;save();toast("Backup restored");location.hash="#run";render();}catch(err){toast("That file isn't a session backup.");}};fr.readAsText(t.files[0]);}
+});
+app.addEventListener("input",e=>{
+  const t=e.target,d=t.dataset;
+  if(d.note){S.notes[d.note]=S.notes[d.note]||{};S.notes[d.note][d.field]=t.value;save();}
+  else if(d.gen){S.general[d.gen]=t.value;save();}
+  else if(d.rname){S.raters.find(r=>r.id===d.rname).name=t.value;save();}
+  else if(d.alabel){art(d.alabel).label=t.value;save();}
+  else if(d.anote){art(d.anote).note=t.value;save();}
+  else if(d.cname){S.criteria.find(c=>c.id===d.cname).name=t.value;save();}
+  else if(d.lvl){S.criteria.find(c=>c.id===d.lvl).levels[d.k]=t.value;save();}
+});
+app.addEventListener("keydown",e=>{
+  const t=e.target;if(!t.classList.contains("qe")||e.key!=="Enter")return;
+  e.preventDefault();
+  const parts=t.value.toUpperCase().replace(/N\/A/g,"NA").split(/[\s,;]+/).filter(Boolean);
+  const toks=parts.length===1&&/^[0-4]+$/.test(parts[0])&&parts[0].length===S.criteria.length?parts[0].split(""):parts;
+  if(toks.length!==S.criteria.length||toks.some(x=>!["0","1","2","3","4","NA"].includes(x))){toast(`Enter ${S.criteria.length} scores (0–4 or NA)`);return;}
+  S.criteria.forEach((c,i)=>setScore(S.curArt,t.dataset.r,c.id,toks[i]));
+  toast("Scores entered");render();
+  const next=[...document.querySelectorAll(".qe")].find(x=>!S.criteria.every(c=>getScore(S.curArt,x.dataset.r,c.id)!==""));if(next)next.focus();
+});
+render();
+</script>
+</body>
+</html>
